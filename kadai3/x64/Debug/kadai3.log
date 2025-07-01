@@ -1,6 +1,2 @@
-﻿  GameScene.cpp
-  SceneBase.cpp
-  SceneManager.cpp
-  TitleScene.cpp
-  コードを生成中...
+﻿  Loading.cpp
   kadai3.vcxproj -> C:\Project\kadai3\kadai3\x64\Debug\kadai3.exe
