@@ -14,5 +14,10 @@ public:
 	void Update(void) override;		//更新
 	void Draw(void) override;		//描画
 	void Release(void) override;	//解放
+
+	void toNextScene(void);			//次のシーンへ
+
+private:
+	int handle_;
 };
 

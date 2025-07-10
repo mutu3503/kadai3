@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "../FpsControl/FpsControl.h"
 #include"../Scene/SceneManager/SceneManager.h"
+#include"../Input/InputManager.h"
 
 Application* Application::instance_ = nullptr;
 
@@ -42,7 +43,9 @@ void Application::Init(void)
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// キー制御初期化
-	SetUseDirectInputFlag(true);
+	SetUseDirectInputFlag(true);	
+	InputManager::CreateInstance();
+	InputManager::GetInstance()->Init();
 
 	//シーン管理初期化
 	SceneManager::CreateInstance();
@@ -69,6 +72,8 @@ void Application::Run(void)
 		// 画面を初期化
 		ClearDrawScreen();
 
+		InputManager::GetInstance()->Update();	//入力制御更新
+
 		SceneManager::GetInstance()->Update();	//シーンの更新
 		SceneManager::GetInstance()->Draw();	//シーンの描画
 
@@ -82,6 +87,9 @@ void Application::Run(void)
 // 解放
 void Application::Release(void)
 {
+	//入力制御削除
+	InputManager::DeleteInstance();
+
 	//シーンの管理解放・削除
 	SceneManager::GetInstance()->Release();
 	SceneManager::DeleteInstance();

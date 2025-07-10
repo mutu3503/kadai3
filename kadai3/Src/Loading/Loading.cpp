@@ -22,7 +22,7 @@ void Loading::Init(void)
 
 void Loading::Load(void)
 {
-	handle_ = LoadGraph("Data/Image/Axe.png");
+	handle_ = LoadGraph("Data/Image/load.png");
 }
 
 void Loading::Update(void)
