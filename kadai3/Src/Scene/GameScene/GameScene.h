@@ -22,6 +22,20 @@ public:
 	void Release(void)		override;	//解放
 
 private:
+	//デバック描画
+	void DebugDraw(void);
+
+	//線分のデバック表示
+	VECTOR lineTopPos_;
+	VECTOR lineDownPos_;
+
+	//衝突判定
+	void Collision(void);
+
+	//ステージとプレイヤーの衝突判定
+	void CollisionStage(void);
+
+private:
 	Grid* grid_;		//グリッドクラス（デバック用）
 
 	Stage* stage_;		//ステージクラス

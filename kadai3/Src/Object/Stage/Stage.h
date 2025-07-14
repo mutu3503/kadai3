@@ -14,12 +14,17 @@ public:
 	Stage();
 	~Stage();
 
-	void Init(void);      //初期化
-	void Load(void);      //読み込み
-	void LoadEnd(void);   //読み込み後
-	void Update(void);
-	void Draw(void);
-	void Release(void);
+	void Init(void);		//初期化
+	void Load(void);		//読み込み
+	void LoadEnd(void);		//読み込み後
+	void Update(void);		//更新
+	void Draw(void);		//描画
+	void Release(void);		//解放
+
+	//線分とブロックの衝突判定
+	bool IsCollLine(
+		VECTOR topPos, VECTOR downPos, MV1_COLL_RESULT_POLY* result
+	);
 
 private:
 	//マップデータの読み込み

@@ -28,6 +28,9 @@ void Player::Init(void)
 	//自己発光
 	MV1SetMaterialAmbColor(modelId_, 0, EMI_COLOR);
 
+	//ジャンプ力の初期化
+	jumpPow_ = 0.0f;
+
 	//アニメーション
 	prevAnimType_ = ANIM_TYPE::IDLE;
 	nowAnimType_ = ANIM_TYPE::IDLE;
@@ -60,6 +63,9 @@ void Player::Update(void)
 	//移動操作
 	ProcessMove();
 
+	//ジャンプ操作
+	ProcessJump();
+		
 	//アニメーションの更新
 	UpdataAnim();
 
@@ -77,6 +83,18 @@ void Player::Release(void)
 {
 	//モデルの削除
 	MV1DeleteModel(modelId_);
+}
+
+VECTOR Player::GetPos(void)
+{
+	return pos_;
+}
+
+void Player::CollisionStage(VECTOR pos)
+{
+	//衝突して戻す位置
+	pos_ = pos;
+	jumpPow_ = 0.0f;
 }
 
 void Player::ProcessMove(void)
@@ -137,6 +155,25 @@ void Player::ProcessMove(void)
 		//アニメーションを変更する
 		nowAnimType_ = ANIM_TYPE::IDLE;
 	}
+}
+
+void Player::ProcessJump(void)
+{
+	//重力
+	jumpPow_ -= GRAVITY;
+
+	//プレイヤーの座標にジャンプ力を加算する
+	pos_.y += jumpPow_;
+
+	//衝突判定前の落下制御
+	if (pos_.y < -1000.0f)
+	{
+		//初期化
+		Init();
+	}
+
+	//モデルに座標を設定する
+	MV1SetPosition(modelId_, pos_);
 }
 
 void Player::UpdataAnim(void)

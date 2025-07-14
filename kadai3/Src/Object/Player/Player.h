@@ -23,6 +23,12 @@ public:
 	//移動スピード
 	static constexpr float MOVE_SPEED = 10.0f;
 
+	//重力
+	static constexpr float GRAVITY = 0.8f;
+
+	//地面の衝突判定用の線分の長さ
+	static constexpr float COLL_LINE_LEN = 10.0f;
+
 public:
 	Player();
 	~Player();
@@ -34,17 +40,28 @@ public:
 	void Draw(void);
 	void Release(void);
 
+	//座標を取得
+	VECTOR GetPos(void);
+
+	//衝突判定
+	void CollisionStage(VECTOR pos);
+
 private:
 	//移動制限
 	void ProcessMove(void);
 
+	//ジャンプ制御
+	void ProcessJump(void);
+
 	//アニメーション更新
 	void UpdataAnim(void);
+
 private:
 	int modelId_;	//モデルハンドル
 	VECTOR pos_;	//座標
 	VECTOR angle_;	//向き
 	VECTOR scale_;	//大きさ
+	float jumpPow_;	//ジャンプ力
 
 	//アニメーション
 	ANIM_TYPE prevAnimType_;	//前回のアニメーション

@@ -67,6 +67,32 @@ void Stage::Release(void)
 	}
 }
 
+bool Stage::IsCollLine(VECTOR topPos, VECTOR downPos, MV1_COLL_RESULT_POLY* result)
+{
+
+	for (int z = 0; z < BLOCK_NUM_Z; z++)
+	{
+		for (int x = 0; x < BLOCK_NUM_X; x++)
+		{
+			//配列からBlockを一つずつ取り出す
+			Block* block = blocks_[z][x];
+
+			//線分とモデルの当たり判定
+			MV1_COLL_RESULT_POLY coll =
+				MV1CollCheck_Line(block->GetModelId(), -1, topPos, downPos);
+
+			//当たった
+			if (coll.HitFlag)
+			{
+				//結果を返す
+				*result = coll;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 void Stage::LoadMapCsvData(void)
 {
 	//ファイルの読み込み

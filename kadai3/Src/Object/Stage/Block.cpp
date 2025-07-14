@@ -38,6 +38,9 @@ void Block::Create(TYPE type, int modelId, int mapX, int mapZ)
 		(SIZE * z) + HALF_BLOCK_SIZE
 	);
 	MV1SetPosition(modelId_, pos_);
+
+	//衝突判定（モデルすべて）
+	MV1SetupCollInfo(modelId_, -1);
 }
 
 void Block::Update(void)
@@ -54,4 +57,9 @@ void Block::Release(void)
 {
 	// モデルの解放
 	MV1DeleteModel(modelId_);
+}
+
+int Block::GetModelId(void)
+{
+	return modelId_;
 }

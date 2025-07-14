@@ -64,8 +64,11 @@ void GameScene::Update(void)
 	//ステージの更新
 	stage_->Update();
 
-	//
+	//プレイヤーの更新
 	player_->Update();
+
+	//衝突判定
+	Collision();
 }
 
 void GameScene::Draw(void)
@@ -101,4 +104,42 @@ void GameScene::Release(void)
 	//プレイヤーの解放
 	player_->Release();
 	delete player_;
+}
+
+void GameScene::DebugDraw(void)
+{
+}
+
+void GameScene::Collision(void)
+{
+	//ステージとプレイヤーの当たり判定
+	CollisionStage();
+}
+
+void GameScene::CollisionStage(void)
+{
+	//プレイヤーの座標を取得
+	VECTOR playerPos = player_->GetPos();
+
+	//線分の上座標
+	VECTOR topPos = playerPos;
+	topPos.y = playerPos.y + (Player::COLL_LINE_LEN * 2.0f);
+
+	//線分の下座標
+	VECTOR downPos = playerPos;
+	downPos.y = playerPos.y - Player::COLL_LINE_LEN;
+
+	//デバック用に確保
+	lineTopPos_ = topPos;
+	lineDownPos_ = downPos;
+
+	//線分とブロックの衝突判定
+	MV1_COLL_RESULT_POLY result;
+
+	//当たっているか？
+	if (stage_->IsCollLine(topPos, downPos, &result))
+	{
+		//プレイヤーに衝突判定を渡す
+		player_->CollisionStage(result.HitPosition);
+	}
 }

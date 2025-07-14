@@ -35,6 +35,9 @@ public:
 	void Draw(void);	// 描画
 	void Release(void);	// 解放
 
+	//モデルのハンドルIDを取得する
+	int GetModelId(void);
+
 private:
 
 	TYPE type_;		// ブロック種別
